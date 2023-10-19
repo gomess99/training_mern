@@ -1,5 +1,4 @@
 const userService = require('../services/user.service')
-const mongoose = require("mongoose")
 
 //sempre que for consultar algo no bd, é preciso a espera e por isso usa-se async
 
@@ -7,10 +6,10 @@ const create = async (req, res) =>{
     const {name, username, email, password, avatar} = req.body;
 
     if(!name || !username || !email || !password || !avatar){
-        res.status(400).send({message: "Algo deu errado"})
+        res.status(400).send({message: "Nem todos os componentes estão preenchidos"})
     }
 
-    const user = await userService.createService(req.body);
+    const user = await userService.createService(req.body); //cria o usuário no BD
 
     if(!user){
         return res.status(400).send({ menssage: "Erro creating User"});
@@ -41,17 +40,8 @@ const findAll = async(req, res) =>{
 }
 
 const findById = async (req, res) => {
-    const id = req.params.id;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).send({ menssage: "Id não encontrado"});
-    }
-
-    const user = await userService.findByIdService(id);
-
-    if(!user){
-        return res.status(400).send({ menssage: "Usuário não encontrado"});
-    }
+    const user = req.user;
 
     res.send(user);
 }
@@ -63,17 +53,7 @@ const update = async (req, res) => {
         res.status(400).send({message: "Necessário pelo menos um campo para realizar o update"})
     }
 
-    const id = req.params.id;
-
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).send({ menssage: "Id não encontrado"});
-    }
-
-    const user = await userService.findByIdService(id);
-
-    if(!user){
-        return res.status(400).send({ menssage: "Usuário não encontrado"})
-    }
+    const {id, user} = req;
 
     await userService.updateService(
         id,
