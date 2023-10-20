@@ -1,4 +1,4 @@
-const userService = require('../services/user.service')
+import userService from "../services/user.service.js"
 
 //sempre que for consultar algo no bd, é preciso a espera e por isso usa-se async
 
@@ -85,7 +85,7 @@ const update = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     create,
     findAll,
     findById,

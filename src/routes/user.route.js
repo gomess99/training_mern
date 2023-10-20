@@ -1,11 +1,12 @@
-const route = require('express').Router();
-const userController = require('../controllers/user.controller')
+import express from "express";
+import userController from "../controllers/user.controller.js"
+import { validId, validUser } from "../middlewares/global.middlewares.js";
 
-const { validId, validUser } = require("../middlewares/global.middlewares")
+const router = express.Router();
 
-route.post("/", userController.create) //cria users
-route.get("/", userController.findAll) //busca todo users
-route.get("/:id", validId, validUser, userController.findById) //busca users id
-route.patch("/:id", validId, validUser, userController.update)
+router.post("/", userController.create) //cria users
+router.get("/", userController.findAll) //busca todo users
+router.get("/:id", validId, validUser, userController.findById) //busca users id
+router.patch("/:id", validId, validUser, userController.update)
 
-module.exports = route;
+export default router;

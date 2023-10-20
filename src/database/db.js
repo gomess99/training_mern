@@ -1,4 +1,5 @@
-const mongoose = require('mongoose'); //importa a biblioteca do mongoose
+
+import mongoose from "mongoose"; //importa a biblioteca do mongoose
 
 const connetcDatabase = () => {
     mongoose.connect(
@@ -9,4 +10,4 @@ const connetcDatabase = () => {
     .catch((error) => console.log(error))
 }
 
-module.exports = connetcDatabase;
+export default connetcDatabase;
